@@ -1,6 +1,6 @@
 # enums.js
 
-enums is a 1 KB standalone module for getting a supported Enum instance.
+enums is a 2 KB standalone module for getting a supported Enum instance.
 
 ## Enum instance
 The Enum instance contains a property for each valid string passed as argument of the create method.
@@ -25,10 +25,10 @@ if (someVar === Color.Blue){
 }
 ```
 **Notice:**
- - All arguments must be of string type or a single array of string values.
  - At least one argument must be passed as part of a method call.
- - It is not allowed to declared an Enum key like `keys` because it conflicts with the already defined `keys` property of Enum object.
- - In case of repeated values, these repetitions are discarded and they aren't included as part of the `keys` property.
+ - All arguments must be of string type or a single array of string values.
+ - It is not allowed to declared an Enum key as `keys` because it conflicts with the already defined `keys` property of Enum object.
+ - In case of repeated values, only the first occurrence is included in the `keys` property and the remaining ones are discarded.
  - The newly created Enum instance is frozen as part of the `enums.create` call.
 
 ## Manual Installation
