@@ -13,8 +13,8 @@
     var exports = {};
 
     function Enum(args){
-        if(args.length === 0){
-            throw new Error('At least one argument must be supplied');
+        if (args.length === 0){
+            throw new Error('At least one argument must be supplied.');
         }
 
         var self = this,
@@ -24,16 +24,20 @@
             if(typeof args[i] !== 'string') {
                 throw new Error('All arguments must be of string type.');
             }
-            if (keys.indexOf(args[i]) < 0){
+            else if (args[i] === 'keys'){
+                throw new Error("A 'keys' argument conflicts with the Enum 'keys' property.");
+            }
+            else if (keys.indexOf(args[i]) < 0){
                 keys.push(args[i]);
             }
         }
 
-        for(var i = 0, len = keys.length; i < len; i++){
+        for(var i = 0, len = keys.length; i < len; i++) {
             self[keys[i]] = keys[i];
         }
 
         self.keys = keys;
+
         return self;
     }
 

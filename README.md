@@ -3,7 +3,7 @@
 enums is a 1 KB standalone module for getting a supported Enum instance.
 
 ## Enum instance
-The Enum instance contains a property for each string passed as argument of the create method.
+The Enum instance contains a property for each valid string passed as argument of the create method.
 And also have `keys` property which returns an array of string with all the values of this Enum instance.
 
 
@@ -16,7 +16,7 @@ if (someVar === Color.Red){
     alert('Yeah!! I am Red.');
 }
 ```
-Instead it is possible just to pass a single array with all the desired enum values
+Instead it is possible just to pass a single array with all the desired enum keys
 ```js
 var colors = enums.create(['Red', 'Blue', 'Yellow']);
 console.log(colors.keys); // output: ["Red", "Blue", "Yellow"]
@@ -27,6 +27,7 @@ if (someVar === Color.Blue){
 **Notice:**
  - All arguments must be of string type or a single array of string values.
  - At least one argument must be passed as part of a method call.
+ - It is not allowed to declared an Enum key like `keys` because it conflicts with the already defined `keys` property of Enum object.
  - In case of repeated values, these repetitions are discarded and they aren't included as part of the `keys` property.
  - The newly created Enum instance is frozen as part of the `enums.create` call.
 
