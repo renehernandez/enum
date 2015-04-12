@@ -10,17 +10,19 @@ And also have `keys` property which returns an array of string with all the valu
 #### enums.create()
 Use `enums.create` to get a new instance of Enum type.
 ```js
+var someVar = 'Red';
 var colors = enums.create('Red', 'Blue', 'Yellow');
 console.log(colors.keys); // output: ["Red", "Blue", "Yellow"]
-if (someVar === Color.Red){
+if (someVar === colors.Red){
     alert('Yeah!! I am Red.');
 }
 ```
 Instead it is possible just to pass a single array with all the desired enum keys
 ```js
+var someVar = 'Blue';
 var colors = enums.create(['Red', 'Blue', 'Yellow']);
 console.log(colors.keys); // output: ["Red", "Blue", "Yellow"]
-if (someVar === Color.Blue){
+if (someVar === colors.Blue){
     alert('Well Yeah!! Now, I am Blue.');
 }
 ```
