@@ -24,11 +24,13 @@
             if(typeof args[i] !== 'string') {
                 throw new Error('All arguments must be of string type.');
             }
-            keys.push(args[i]);
+            if (keys.indexOf(args[i]) < 0){
+                keys.push(args[i]);
+            }
         }
 
         for(var i = 0, len = keys.length; i < len; i++){
-            self[keys[i]] = i;
+            self[keys[i]] = keys[i];
         }
 
         self.keys = keys;
