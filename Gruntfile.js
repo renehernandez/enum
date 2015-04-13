@@ -20,7 +20,7 @@ module.exports = function(grunt) {
             core: ['<%= project.src %>/<%= project.filename %>.js']
         },
 
-        banner: '/*! <%= pkg.title %> v<%= pkg.version %> | (c) <%= grunt.template.today(\'yyyy\') %> @renehernandez | <%= pkg.homepage %>*/\n',
+        banner: '/*! <%= pkg.title %> v<%= pkg.version %> | (c) <%= grunt.template.today(\'yyyy\') %> @renehernandez | <%= pkg.homepage %> */\n',
 
         jshint: {
             gruntfile: 'Gruntfile.js',
@@ -50,6 +50,27 @@ module.exports = function(grunt) {
                 src: '<%= project.src %>/<%= project.filename %>',
                 dest: '<%= project.test %>/<%= project.filename %>'
             }
+        },
+
+        concat: {
+            dist: {
+                src: ['<%= project.core %>'],
+                dest: '<%= project.dist %>/<%= project.filename %>.js'
+            },
+            options: {
+                stripBanners: true,
+                banner: '<%= banner %>'
+            }
+        },
+
+        uglify: {
+            options: {
+                banner: '<%= banner %>'
+            },
+            dist: {
+                src: '<%= project.dist %>/<%= project.filename %>.js',
+                dest: '<%= project.dist %>/<%= project.filename %>.min.js'
+            }
         }
 
     });
@@ -57,6 +78,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'clean',
         'jshint',
-        'copy'
+        'concat',
+        'uglify'
     ]);
 };
