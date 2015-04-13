@@ -37,7 +37,7 @@ describe('enums', function () {
             expect(function() { enums.create('1Hello', 'Hello!'); }).toThrowError(errorInvalidIdentifier);
             expect(function() { enums.create(['^Red', 'Hello!']); }).toThrowError(errorInvalidIdentifier);
             expect(function() { enums.create({ '-Test': 'Test', Hello: 1}); }).toThrowError(errorInvalidIdentifier);
-        })
+        });
 
         it('freezes Enum object upon creation', function() {
             expect(Object.isFrozen(enums.create('Hello'))).toBe(true);
