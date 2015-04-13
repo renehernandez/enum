@@ -16,7 +16,7 @@ module.exports = function(grunt) {
             src: 'src',
             filename: 'enums',
             dist: 'dist',
-            test: 'test',
+            specs: 'specs',
             core: ['<%= project.src %>/<%= project.filename %>.js']
         },
 
@@ -46,9 +46,9 @@ module.exports = function(grunt) {
         },
 
         copy: {
-            test: {
-                src: '<%= project.src %>/<%= project.filename %>',
-                dest: '<%= project.test %>/<%= project.filename %>'
+            specs: {
+                src: '<%= project.src %>/<%= project.filename %>.js',
+                dest: '<%= project.specs %>/<%= project.filename %>.js'
             }
         },
 
@@ -71,6 +71,13 @@ module.exports = function(grunt) {
                 src: '<%= project.dist %>/<%= project.filename %>.js',
                 dest: '<%= project.dist %>/<%= project.filename %>.min.js'
             }
+        },
+
+        jasmine: {
+            src: 'src/**/*.js',
+            options: {
+                specs: 'specs/**/*.js'
+            }
         }
 
     });
@@ -78,6 +85,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'clean',
         'jshint',
+        'jasmine',
         'concat',
         'uglify'
     ]);
