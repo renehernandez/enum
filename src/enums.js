@@ -11,46 +11,90 @@
     'use strict';
 
     var exports = {};
+    var class2type = {};
+    var names = ['String', 'Array', 'Object'];
+
+    for(var i = 0, len = names.length; i < len; i++){
+        class2type['[object ' + names[i] + ']'] = names[i].toLowerCase();
+    }
+
+    var type = function(obj){
+        return class2type[Object.prototype.toString.call(obj)];
+    };
 
     var isArray = Array.isArray || function(obj) {
-        return Object.prototype.toString.call(obj) === "[object Array]";
+        return type(obj) === 'array';
+    };
+
+    var isObject = function(obj) {
+        return type(obj) === 'object';
+    };
+
+    var isString = function(obj) {
+        return type(obj) === 'string';
     };
 
     function Enum(args) {
+        var output = {};
+        var key;
+        var obj;
+        var errorType = 'All arguments must be of string type, a string array or an object.';
+        var errorMultipleDefs = 'Multiple definitions of the same key.';
+        var errorArgsRequired = 'At least one argument must be supplied.';
+        var errorEmptyContainer = 'The array (object) must contains at least one element (property).';
+        var errorInvalidIdentifier = 'Keys must be ASCII valid identifiers.';
+        var regExp = /^[a-zA-Z_$][\w$]*$/;
+
+        var addKey = function(name, value) {
+             if (!isString(name)) {
+                throw new Error(errorType);
+            }
+            else if(!regExp.test(name)){
+                throw new Error(errorInvalidIdentifier);
+            }
+            else if (output.hasOwnProperty(name)) {
+                throw new Error(errorMultipleDefs);
+            }
+            else {
+                output[name] = value;
+            }
+        };
+
         if (args.length === 0) {
-            throw new Error('At least one argument must be supplied.');
+            throw new Error(errorArgsRequired);
         }
 
-        if (args.length === 1 && isArray(args[0])) {
-            if (args[0].length === 0) {
-                throw new Error('The keys array must not be empty.');
-            } else{
-                args = args[0];
+        if (args.length === 1 && !isString(args[0])) {
+            obj = args[0];
+            if (isArray(obj)) {
+                for(var i = 0, len = obj.length; i < len; i++) {
+                    addKey(obj[i], obj[i]);
+                }
+            }
+            else if (isObject(obj)) {
+                for(key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        addKey(key, obj[key]);
+                    }
+                }
+            } else {
+                throw new Error(errorType);
+            }
+        }
+        else {
+            for(var i = 0, len = args.length; i < len; i++) {
+                addKey(args[i], args[i]);
             }
         }
 
-        var self = this;
-        var keys = [];
-
-        for(var i = 0, len = args.length; i < len; i++){
-            if(typeof args[i] !== 'string') {
-                throw new Error('All arguments must be of string type or a single string array.');
-            }
-            else if (args[i] === 'keys'){
-                throw new Error("A 'keys' argument conflicts with the Enum 'keys' property.");
-            }
-            else if (keys.indexOf(args[i]) < 0){
-                keys.push(args[i]);
-                self[args[i]] = args[i];
-            }
+        if (Object.keys(output).length === 0) {
+            throw new Error(errorEmptyContainer);
         }
 
-        self.keys = keys;
-
-        return self;
+        return output;
     }
 
-    exports.create = function () {
+    exports.create = function() {
         return Object.freeze(new Enum(arguments));
     };
 
