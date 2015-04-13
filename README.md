@@ -27,7 +27,7 @@ if (someVar === colors.Blue){
 }
 ```
 **Notice:**
- - At least one argument must be passed as part of a method call.
+ - At least one argument must be passed as part of the method call.
  - All arguments must be of string type or a single array of string values.
  - It is not allowed to declared an Enum key as `keys` because it conflicts with the already defined `keys` property of Enum object.
  - In case of repeated values, only the first occurrence is included in the `keys` property and the remaining ones are discarded.

@@ -1,3 +1,4 @@
+/*! enums v1.0.0 | (c) 2015 @renehernandez | https://github.com/renehernandez/enums */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(factory);
