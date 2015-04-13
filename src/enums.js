@@ -4,20 +4,20 @@
   } else if (typeof exports === 'object') {
     module.exports = factory;
   } else {
-    root.enums = factory(root);
+    root.enums = factory();
   }
-})(this, function (root) {
+})(this, function () {
 
     'use strict';
 
     var exports = {};
 
-    var isArray = Array.isArray || function(obj){
-        return toString.call(obj) === "[object Array]";
-    }
+    var isArray = Array.isArray || function(obj) {
+        return Object.prototype.toString.call(obj) === "[object Array]";
+    };
 
-    function Enum(args){
-        if (args.length === 0){
+    function Enum(args) {
+        if (args.length === 0) {
             throw new Error('At least one argument must be supplied.');
         }
 
@@ -29,8 +29,8 @@
             }
         }
 
-        var self = this,
-                keys = [];
+        var self = this;
+        var keys = [];
 
         for(var i = 0, len = args.length; i < len; i++){
             if(typeof args[i] !== 'string') {
@@ -41,11 +41,8 @@
             }
             else if (keys.indexOf(args[i]) < 0){
                 keys.push(args[i]);
+                self[args[i]] = args[i];
             }
-        }
-
-        for(var i = 0, len = keys.length; i < len; i++) {
-            self[keys[i]] = keys[i];
         }
 
         self.keys = keys;
@@ -53,7 +50,7 @@
         return self;
     }
 
-    exports['create'] = function () {
+    exports.create = function () {
         return Object.freeze(new Enum(arguments));
     };
 
