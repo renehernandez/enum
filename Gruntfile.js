@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
         jshint: {
             gruntfile: 'Gruntfile.js',
-            files: ['<%= project.core %>'],
+            files: ['<%= project.core %>', '<%= project.specs %>/<%= project.filename %>-specs.js'],
             options: {
                 jshintrc: '.jshintrc'
             }
